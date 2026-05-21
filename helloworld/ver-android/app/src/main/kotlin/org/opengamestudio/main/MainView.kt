@@ -33,7 +33,7 @@ fun MainView(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(16.dp)
+                    .padding(17.dp)
             ) {
                 OutlinedTextField(
                     value = vm.mainTaskTitle.value,
