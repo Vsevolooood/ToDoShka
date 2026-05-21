@@ -8,8 +8,10 @@ object MainProto {
         setupComponentDebugging(ctrl, "Main")
         arrayOf(
             ::mainShouldLaunch,
-            ::mainShouldResetGreetingText,
             ::mainShouldResetVisibility,
+            ::mainShouldResetVisibility,
+            ::shouldResetTasks,
+            ::mainShouldClearTaskTitle
         ).forEach { f ->
             ctrl.registerFunction { c -> f(c as MainContext) }
         }

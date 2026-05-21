@@ -21,43 +21,60 @@ fun mainShouldLaunch(c: MainContext): MainContext {
     c.recentField = F.none
     return c
 }
-
-// Specify greeting text
-//
-// Conditions:
-// 1. Did launch
-// 2. Did click `Change text` button
-fun mainShouldResetGreetingText(c: MainContext): MainContext {
-    if (c.recentField == F.didLaunch) {
-        c.greetingText = "Hello, World!"
-        c.recentField = F.greetingText
+fun shouldResetTasks(c: MainContext): MainContext {
+    if (c.recentField == F.didClickSaveText && c.taskTitle.isNotBlank()) {
+        c.tasks = c.tasks
+        c.recentField = F.tasks
         return c
     }
-
-    if (c.recentField == F.didClickChangeText) {
-        c.greetingText = "Умом Россию не понять!"
-        c.recentField = F.greetingText
+    if (c.recentField == F.didClickSaveText &&
+        c.taskTitle.isNotBlank()
+    ) {
+        c.taskTitle = ""
+        c.recentField = F.taskTitle
         return c
     }
 
     c.recentField = F.none
     return c
+
+    c.recentField = F.none
+    return c
 }
 
-// Set `main` window visible
-//
-// Conditions:
-// 1. Did launch
+fun mainShouldClearTaskTitle(c: MainContext): MainContext {
+    if (c.recentField == F.didClickSaveText && c.taskTitle.isNotBlank()) {
+        c.taskTitle = ""
+        c.recentField = F.taskTitle  // Сообщаем, что изменилось поле taskTitle
+        return c
+    }
+    c.recentField = F.none
+    return c
+}
 fun mainShouldResetVisibility(c: MainContext): MainContext {
     if (c.recentField == F.didLaunch) {
         c.isVisible = true
         c.recentField = F.isVisible
         return c
     }
-
     c.recentField = F.none
     return c
 }
+
+
+// Specify greeting text
+//
+// Conditions:
+// 1. Did launch
+// 2. Did click `Change text` button
+
+
+// Set `main` window visible
+//
+// Conditions:
+// 1. Did launch
+
+
 
 //<!-- Other functions -->
 

@@ -1,22 +1,35 @@
-import QtQuick
-import QtQuick.Controls
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
 Rectangle {
     id: mainView
+    anchors.fill: parent
     visible: vm.mainIsVisible
 
-    Text {
-        anchors.horizontalCenter: mainView.horizontalCenter
-        font.bold: true
-        font.pointSize: 24
-        text: vm.mainGreetingText
-        y: 30
-    }
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 16
 
-    Button {
-        anchors.horizontalCenter: mainView.horizontalCenter
-        onClicked: api.mainSet(F.didClickChangeText, true)
-        text: "Change text"
-        y: 100
+        TextField {
+            id: taskInput
+
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop
+
+            placeholderText: "Задача"
+            text: vm.mainTaskTitle
+            onTextChanged: {
+                api.mainSet(F.taskTitle, text)
+            }
+
+            onAccepted: {
+                onAccepted: {
+                    api.mainSet(F.didClickSaveText, true)
+
+                    console.log(vm.tasks)
+                }
+            }
+        }
     }
 }

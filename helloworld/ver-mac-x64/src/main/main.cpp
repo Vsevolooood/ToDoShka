@@ -11,8 +11,9 @@
 
 MainComponent::MainComponent() {
     std::vector<std::any> oneliners = {
-        F.greetingText, CB( VM.mainSetGreetingText(c.greetingText()); ),
-        F.isVisible, CB( VM.mainSetIsVisible(c.isVisible()); ),
+            F.taskTitle, CB( VM.mainSettaskTitle(c.taskTitle()); ),
+            F.isVisible, CB( VM.mainSetIsVisible(c.isVisible()); ),
+
     };
     MainEffectRegistry::registerOneliners(KT.mainCtrl(), oneliners);
 }

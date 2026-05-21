@@ -23,8 +23,12 @@ kotlin: package org.opengamestudio
 MainContext:
     type: context
     fields:
-        didClickChangeText: Bool
         didLaunch: Bool
         didSetup: Bool
-        greetingText: String
         isVisible: Bool
+        didClickSaveText: Bool
+        saveString: String
+        shouldSavaTasks: Bool
+        taskTitle: String
+        tasks: [String]
+        didSelectTask: String

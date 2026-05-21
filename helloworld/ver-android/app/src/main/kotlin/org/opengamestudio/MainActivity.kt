@@ -17,7 +17,7 @@ class MainActivity: ComponentActivity() {
 
         setContent {
             MyApplicationTheme {
-                MainView(VM)
+                MainView(vm = VM)
             }
         }
     }
