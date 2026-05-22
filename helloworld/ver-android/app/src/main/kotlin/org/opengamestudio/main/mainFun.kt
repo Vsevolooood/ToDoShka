@@ -23,20 +23,10 @@ fun mainShouldLaunch(c: MainContext): MainContext {
 }
 fun shouldResetTasks(c: MainContext): MainContext {
     if (c.recentField == F.didClickSaveText && c.taskTitle.isNotBlank()) {
-        c.tasks = c.tasks
+        c.tasks = c.tasks + c.taskTitle
         c.recentField = F.tasks
         return c
     }
-    if (c.recentField == F.didClickSaveText &&
-        c.taskTitle.isNotBlank()
-    ) {
-        c.taskTitle = ""
-        c.recentField = F.taskTitle
-        return c
-    }
-
-    c.recentField = F.none
-    return c
 
     c.recentField = F.none
     return c
@@ -77,6 +67,7 @@ fun mainShouldResetVisibility(c: MainContext): MainContext {
 
 
 //<!-- Other functions -->
+
 
 fun mainCtrl(): KDController {
     return MainProto.ctrl

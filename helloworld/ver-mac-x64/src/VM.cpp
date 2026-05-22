@@ -1,3 +1,4 @@
+// VM.cpp
 #include "VM.h"
 #include <QDebug>
 
@@ -23,40 +24,14 @@ void VM::mainSettaskTitle(const QString &value) {
     mainSetTaskTitle(value);
 }
 
-void VM::addTask(const QString &task) {
-    if (!task.isEmpty()) {
-        _tasks.append(task);
+void VM::mainSetTasks(const QStringList &tasks) {
+    if (_tasks != tasks) {
+        _tasks = tasks;
         emit tasksChanged();
+        qDebug() << "Tasks updated:" << _tasks;
     }
 }
 
-void VM::addAllTasks(const QStringList &tasks) {
-    if (!tasks.isEmpty()) {
-        _tasks.append(tasks);
-        emit tasksChanged();
-    }
-}
-
-// Перегрузка для std::vector<std::string> из Kotlin
-void VM::addAllTasks(const std::vector<std::string> &tasks) {
-    if (!tasks.empty()) {
-        for (const auto &task : tasks) {
-            _tasks.append(QString::fromStdString(task));
-        }
-        emit tasksChanged();
-    }
-}
-
-void VM::removeTask(int index) {
-    if (index >= 0 && index < _tasks.size()) {
-        _tasks.removeAt(index);
-        emit tasksChanged();
-    }
-}
-
-void VM::clearTasks() {
-    if (!_tasks.isEmpty()) {
-        _tasks.clear();
-        emit tasksChanged();
-    }
+void VM::mainSettasks(const QStringList &tasks) {
+    mainSetTasks(tasks);
 }

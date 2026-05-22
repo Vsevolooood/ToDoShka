@@ -10,5 +10,6 @@ object VM {
     var mainIsVisible = mutableStateOf(false)
 
     var mainTaskTitle = mutableStateOf("")
-    var tasks = mutableStateListOf<String>()
+    var tasks = mutableStateOf(arrayOf<String>())
+
 }

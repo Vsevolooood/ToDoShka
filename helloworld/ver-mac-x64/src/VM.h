@@ -1,10 +1,9 @@
+// VM.h
 #ifndef HW_VM_H
 #define HW_VM_H
 
 #include <QObject>
 #include <QStringList>
-#include <vector>
-#include <string>
 
 class VM: public QObject {
     Q_OBJECT
@@ -26,16 +25,15 @@ class VM: public QObject {
     Q_PROPERTY(
             QStringList tasks
             READ tasks
+            WRITE mainSetTasks
             NOTIFY tasksChanged
     )
-
-private:
-    VM();
 
 public:
     VM(VM const &) = delete;
     void operator=(VM const &) = delete;
     virtual ~VM() { }
+
     static VM &singleton() {
         static VM instance;
         return instance;
@@ -49,12 +47,9 @@ public:
 public slots:
             void mainSetIsVisible(bool value);
     void mainSetTaskTitle(const QString &value);
-    void mainSettaskTitle(const QString &value);  // Алиас для Kotlin
-    void addTask(const QString &task);
-    void addAllTasks(const QStringList &tasks);   // Для QStringList
-    void addAllTasks(const std::vector<std::string> &tasks);  // Для std::vector из Kotlin
-    void removeTask(int index);
-    void clearTasks();
+    void mainSettaskTitle(const QString &value);
+    void mainSetTasks(const QStringList &tasks);
+    void mainSettasks(const QStringList &tasks);
 
     signals:
             void mainDidChangeIsVisible(bool value);
@@ -62,6 +57,8 @@ public slots:
     void tasksChanged();
 
 private:
+    VM();
+
     bool _mainIsVisible = false;
     QString _mainTaskTitle = "";
     QStringList _tasks;
