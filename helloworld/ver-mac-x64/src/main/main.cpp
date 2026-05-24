@@ -13,7 +13,12 @@ MainComponent::MainComponent() {
     std::vector<std::any> oneliners = {
             F.taskTitle, CB( VM.mainSettaskTitle(c.taskTitle()); ),
             F.isVisible, CB( VM.mainSetIsVisible(c.isVisible()); ),
-         //   F.tasks, CB( VM.mainSetTasks(c.tasks()); ),
+            F.tasksString, CB(
+                                   VM.mainSettasksString(c.tasksString());
+
+                                   auto tasks = stringToTasks(c.tasksString());
+                                   VM.mainSettasks(tasks);
+                           ),
 
     };
     MainEffectRegistry::registerOneliners(KT.mainCtrl(), oneliners);

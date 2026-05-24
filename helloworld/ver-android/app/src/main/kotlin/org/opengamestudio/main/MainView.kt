@@ -64,6 +64,15 @@ fun MainView(
                             mainSet(F.didClickSaveText, true)
                         }
                     ),
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                mainSet(F.didClickRemoveTasks, true)
+                            }
+                        ) {
+                            Icon(Icons.Default.Clear, contentDescription = "Очистить")
+                        }
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -76,14 +85,19 @@ fun MainView(
                         .background(Color.LightGray),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(vm.tasks.value) { taskText  ->
+                    items(vm.tasks) { item ->
                         Text(
-                            text = taskText,
+                            text = item.title,
                             modifier = Modifier
                                 .padding(8.dp)
                                 .clickable {
-                                    mainSet(F.didSelectTask, taskText)
+                                    mainSet(F.didSelectTask, item.id)
                                 },
+                            textDecoration = if (item.isDone)
+                                TextDecoration.LineThrough
+                            else
+                                TextDecoration.None,
+                            color = if (item.isDone) Color.Gray else Color.Black
                         )
                     }
                 }
