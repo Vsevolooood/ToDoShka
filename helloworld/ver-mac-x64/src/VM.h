@@ -29,6 +29,13 @@ class VM: public QObject {
             NOTIFY tasksChanged
     )
 
+    Q_PROPERTY(
+            QString tasksString
+            READ tasksString
+            WRITE mainSetTasksString
+            NOTIFY tasksStringChanged
+    )
+
 public:
     VM(VM const &) = delete;
     void operator=(VM const &) = delete;
@@ -43,6 +50,7 @@ public:
     bool mainIsVisible() const { return _mainIsVisible; }
     QString mainTaskTitle() const { return _mainTaskTitle; }
     QStringList tasks() const { return _tasks; }
+    QString tasksString() const { return _tasksString; }
 
 public slots:
             void mainSetIsVisible(bool value);
@@ -50,11 +58,14 @@ public slots:
     void mainSettaskTitle(const QString &value);
     void mainSetTasks(const QStringList &tasks);
     void mainSettasks(const QStringList &tasks);
+    void mainSetTasksString(const QString &value);
+    void mainSettasksString(const QString &value);
 
     signals:
             void mainDidChangeIsVisible(bool value);
     void mainDidChangeTaskTitle(const QString &value);
     void tasksChanged();
+    void tasksStringChanged();
 
 private:
     VM();
@@ -62,6 +73,8 @@ private:
     bool _mainIsVisible = false;
     QString _mainTaskTitle = "";
     QStringList _tasks;
+    QString _tasksString;
+    bool _isSyncing = false;  // Флаг для предотвращения рекурсии
 };
 
 #endif // HW_VM_H

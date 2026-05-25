@@ -36,9 +36,11 @@ MainContext:
         didClickToSave: Bool
         didLaunch: Bool
         didSetup: Bool
+        isSyncing: Bool
         isVisible: Bool
         loadTasks: Bool
         saveString: String
+        tasksString: String
         shouldSavaTasks: Bool
         taskTitle: String
         tasks: [ MainItem ]

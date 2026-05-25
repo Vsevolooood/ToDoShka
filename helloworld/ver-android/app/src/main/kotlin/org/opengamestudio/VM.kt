@@ -11,5 +11,6 @@ object VM {
 
     var mainTaskTitle = mutableStateOf("")
     var tasks = mutableStateListOf<MainItem>()
+    var tasksString = mutableStateOf("")
 
 }

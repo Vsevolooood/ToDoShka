@@ -37,7 +37,10 @@ Rectangle {
             clip: true
             spacing: 8
 
-            model: vm.tasks
+
+            property var taskList: vm.tasksString !== "" ? vm.tasksString.split('|') : []
+
+            model: taskList
 
             delegate: Rectangle {
                 width: ListView.view.width
@@ -51,28 +54,28 @@ Rectangle {
                 border.width: 1
                 border.color: "#C0C0C0"
 
+                // Парсим строку задачи: id,title,isDone
+                property var parts: modelData.split(',')
+                property string taskId: parts.length > 0 ? parts[0] : ""
+                property string taskTitle: parts.length > 1 ? parts[1] : ""
+                property bool taskIsDone: parts.length > 2 ? parts[2] === 'true' : false
+
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 12
 
-                    text: modelData.title
+                    text: taskTitle
 
-                    color: modelData.isDone
-                        ? "#808080"
-                        : "#000000"
-
-                    font.strikeout: modelData.isDone
+                    color: taskIsDone ? "#808080" : "#000000"
+                    font.strikeout: taskIsDone
                 }
 
                 MouseArea {
                     anchors.fill: parent
 
                     onClicked: {
-                        api.mainSet(
-                            F.didSelectTask,
-                            modelData.id
-                        )
+                        api.mainSet(F.didSelectTask, taskId)
                     }
                 }
             }

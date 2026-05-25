@@ -21,6 +21,7 @@ fun mainShouldLaunch(c: MainContext): MainContext {
     c.recentField = F.none
     return c
 }
+
 fun shouldResetTasks(c: MainContext): MainContext {
     if (c.recentField == F.didClickSaveText && c.taskTitle.isNotBlank()) {
         val nextId = (c.tasks.maxOfOrNull { it.id.toInt() } ?: 0) + 1
@@ -48,6 +49,25 @@ fun shouldResetTasks(c: MainContext): MainContext {
     return c
 }
 
+
+fun mainShouldSyncTasksToString(c: MainContext): MainContext {
+    if (c.recentField == F.tasks && !c.isSyncing) {
+        c.isSyncing = true
+        val newString = TasksSerializer.serialize(c.tasks)
+        if (c.tasksString != newString) {
+            c.tasksString = newString
+            c.recentField = F.tasksString
+        } else {
+            c.recentField = F.none
+        }
+        c.isSyncing = false
+        return c
+    }
+
+    c.recentField = F.none
+    return c
+}
+
 fun mainShouldClearTaskTitle(c: MainContext): MainContext {
     if (c.recentField == F.didClickSaveText && c.taskTitle.isNotBlank()) {
         c.taskTitle = ""
@@ -57,6 +77,7 @@ fun mainShouldClearTaskTitle(c: MainContext): MainContext {
     c.recentField = F.none
     return c
 }
+
 fun mainShouldResetVisibility(c: MainContext): MainContext {
     if (c.recentField == F.didLaunch) {
         c.isVisible = true
@@ -67,23 +88,7 @@ fun mainShouldResetVisibility(c: MainContext): MainContext {
     return c
 }
 
-
-// Specify greeting text
-//
-// Conditions:
-// 1. Did launch
-// 2. Did click `Change text` button
-
-
-// Set `main` window visible
-//
-// Conditions:
-// 1. Did launch
-
-
-
 //<!-- Other functions -->
-
 
 fun mainCtrl(): KDController {
     return MainProto.ctrl
