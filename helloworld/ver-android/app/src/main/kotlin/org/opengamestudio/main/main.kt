@@ -10,7 +10,7 @@ object MainComponent {
         val oneliners = arrayOf(
             F.isVisible, { c: MC -> vm.mainIsVisible.value = c.isVisible },
             F.taskTitle, { c: MC -> vm.mainTaskTitle.value = c.taskTitle },
-            F.tasks, { c: MC ->
+            F.tasksString, { c: MC ->
                 vm.tasks.clear()
                 vm.tasks.addAll(c.tasks)
             },
@@ -21,4 +21,5 @@ object MainComponent {
     fun setup() {
         mainSet(F.didSetup, true)
     }
+
 }

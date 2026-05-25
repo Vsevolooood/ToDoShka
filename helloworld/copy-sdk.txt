@@ -1,3 +1,4 @@
 main/mainFun.kt
 main/mainProto.kt
+main/TasksSerializer.kt
 other.kt

@@ -1,10 +1,9 @@
+// VM.h
 #ifndef HW_VM_H
 #define HW_VM_H
 
 #include <QObject>
 #include <QStringList>
-#include <vector>
-#include <string>
 
 class VM: public QObject {
     Q_OBJECT
@@ -26,16 +25,22 @@ class VM: public QObject {
     Q_PROPERTY(
             QStringList tasks
             READ tasks
+            WRITE mainSetTasks
             NOTIFY tasksChanged
     )
 
-private:
-    VM();
+    Q_PROPERTY(
+            QString tasksString
+            READ tasksString
+            WRITE mainSetTasksString
+            NOTIFY tasksStringChanged
+    )
 
 public:
     VM(VM const &) = delete;
     void operator=(VM const &) = delete;
     virtual ~VM() { }
+
     static VM &singleton() {
         static VM instance;
         return instance;
@@ -45,26 +50,31 @@ public:
     bool mainIsVisible() const { return _mainIsVisible; }
     QString mainTaskTitle() const { return _mainTaskTitle; }
     QStringList tasks() const { return _tasks; }
+    QString tasksString() const { return _tasksString; }
 
 public slots:
             void mainSetIsVisible(bool value);
     void mainSetTaskTitle(const QString &value);
-    void mainSettaskTitle(const QString &value);  // Алиас для Kotlin
-    void addTask(const QString &task);
-    void addAllTasks(const QStringList &tasks);   // Для QStringList
-    void addAllTasks(const std::vector<std::string> &tasks);  // Для std::vector из Kotlin
-    void removeTask(int index);
-    void clearTasks();
+    void mainSettaskTitle(const QString &value);
+    void mainSetTasks(const QStringList &tasks);
+    void mainSettasks(const QStringList &tasks);
+    void mainSetTasksString(const QString &value);
+    void mainSettasksString(const QString &value);
 
     signals:
             void mainDidChangeIsVisible(bool value);
     void mainDidChangeTaskTitle(const QString &value);
     void tasksChanged();
+    void tasksStringChanged();
 
 private:
+    VM();
+
     bool _mainIsVisible = false;
     QString _mainTaskTitle = "";
     QStringList _tasks;
+    QString _tasksString;
+    bool _isSyncing = false;  // Флаг для предотвращения рекурсии
 };
 
 #endif // HW_VM_H
