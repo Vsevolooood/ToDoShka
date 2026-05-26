@@ -21,5 +21,4 @@ object MainComponent {
     fun setup() {
         mainSet(F.didSetup, true)
     }
-
 }

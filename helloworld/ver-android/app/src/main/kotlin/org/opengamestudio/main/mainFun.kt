@@ -8,6 +8,8 @@ package org.opengamestudio
 //
 // Conditions:
 // 1. UI has been created the first time
+
+
 fun mainShouldLaunch(c: MainContext): MainContext {
     if (
         c.recentField == F.didSetup &&

@@ -25,7 +25,6 @@ MainComponent::MainComponent() {
     };
     MainEffectRegistry::registerOneliners(KT.mainCtrl(), oneliners);
 }
-
 void MainComponent::setup() {
     mainSet(F.didSetup, true);
 }

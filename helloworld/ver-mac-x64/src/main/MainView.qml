@@ -69,7 +69,7 @@ Rectangle {
                 border.width: 1
                 border.color: "#C0C0C0"
 
-                property var parts: modelData.split(',')
+                property var parts: modelData.split('&')
                 property string taskId: parts.length > 0 ? parts[0] : ""
                 property string taskTitle: parts.length > 1 ? parts[1] : ""
                 property bool taskIsDone: parts.length > 2 ? parts[2] === 'true' : false
