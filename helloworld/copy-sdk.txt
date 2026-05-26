@@ -1,5 +1,4 @@
 main/mainFun.kt
 main/mainProto.kt
 main/TasksSerializer.kt
-main/SaveManager.kt
 other.kt
