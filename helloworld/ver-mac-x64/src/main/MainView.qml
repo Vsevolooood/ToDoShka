@@ -12,21 +12,40 @@ Rectangle {
         anchors.margins: 16
         spacing: 16
 
-        TextField {
-            id: taskInput
-
+        RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
+            spacing: 8
 
-            placeholderText: "Задача"
-            text: vm.mainTaskTitle
+            TextField {
+                id: taskInput
+                Layout.fillWidth: true
+                placeholderText: "Задача"
+                text: vm.mainTaskTitle
 
-            onTextChanged: {
-                api.mainSet(F.taskTitle, text)
+                onTextChanged: {
+                    api.mainSet(F.taskTitle, text)
+                }
+
+                onAccepted: {
+                    api.mainSet(F.didClickSaveText, true)
+                }
             }
 
-            onAccepted: {
-                api.mainSet(F.didClickSaveText, true)
+            Button {
+                id: clearButton
+                text: "Del"
+                font.pixelSize: 18
+
+                background: Rectangle {
+                    color: "#E0E0E0"
+                    radius: 4
+                    border.color: "#B0B0B0"
+                }
+
+                onClicked: {
+                    api.mainSet(F.didClickRemoveTasks, true)
+                }
             }
         }
 
@@ -37,7 +56,6 @@ Rectangle {
             clip: true
             spacing: 8
 
-
             property var taskList: vm.tasksString !== "" ? vm.tasksString.split('|') : []
 
             model: taskList
@@ -47,15 +65,11 @@ Rectangle {
                 height: 48
                 radius: 8
 
-                color: modelData.isDone
-                    ? "#D3D3D3"
-                    : "#F5F5F5"
-
+                color: taskIsDone ? "#D3D3D3" : "#F5F5F5"
                 border.width: 1
                 border.color: "#C0C0C0"
 
-                // Парсим строку задачи: id,title,isDone
-                property var parts: modelData.split(',')
+                property var parts: modelData.split('&')
                 property string taskId: parts.length > 0 ? parts[0] : ""
                 property string taskTitle: parts.length > 1 ? parts[1] : ""
                 property bool taskIsDone: parts.length > 2 ? parts[2] === 'true' : false
