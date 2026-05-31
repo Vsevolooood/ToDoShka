@@ -47,16 +47,6 @@ fun mainShouldConvertTasksToString(c: MainContext): MainContext {
     return c
 }
 
-fun mainShouldConvertTasksFromString(c: MainContext): MainContext {
-    if (c.recentField == F.tasksString && c.tasksString.isNotBlank()) {
-        c.tasks = stringToTasks(c.tasksString)
-        c.recentField = F.tasks
-        return c
-    }
-    c.recentField = F.none
-    return c
-}
-
 fun mainShouldClearTaskTitle(c: MainContext): MainContext {
     if (c.recentField == F.didClickSaveText && c.taskTitle.isNotBlank()) {
         c.taskTitle = ""
@@ -91,4 +81,25 @@ fun mainCtrlCtxField(): String {
 
 fun mainSet(k: String, v: Any) {
     MainProto.ctrl.set(k, v)
+}
+
+fun mainShouldSaveTasks(c: MainContext): MainContext {
+    if (c.recentField == F.tasksString) {
+        c.saveString = tasksToJson(c.tasks)
+        c.shouldSavaTasks = true
+        c.recentField = F.shouldSavaTasks
+        return c
+    }
+    c.recentField = F.none
+    return c
+}
+
+fun mainShouldLoadTasks(c: MainContext): MainContext {
+    if (c.recentField == F.loadTasks) {
+        c.tasks = jsonToTasks(c.saveString)
+        c.recentField = F.tasks
+        return c
+    }
+    c.recentField = F.none
+    return c
 }
